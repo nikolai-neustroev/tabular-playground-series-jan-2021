@@ -1,0 +1,26 @@
+stages:
+
+  download_data:
+    cmd: python src/data/download_data.py
+    params:
+      - kaggle_competition
+    outs:
+      - data/raw/example_sample_submission.csv
+      - data/raw/example_test.csv
+      - data/raw/lectures.csv
+      - data/raw/questions.csv
+      - data/raw/train.csv
+      - data/raw/riiideducation/__init__.py
+      - data/raw/riiideducation/competition.cpython-37m-x86_64-linux-gnu.so
+
+  csv2feather:
+    cmd: python src/data/csv2feather.py
+    deps:
+      - data/raw/train.csv
+    outs:
+      - data/raw/train.feather
+
+  sample_data:
+    cmd: src/data/sample_data.py
+    deps:
+      - data/raw/train.feather
