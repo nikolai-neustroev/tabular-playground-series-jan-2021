@@ -70,3 +70,12 @@ stages:
       - tail_length
     outs:
       - data/interim/train_tail.csv
+
+  add_bundle_id_and_part:
+    cmd: python src/feature/add_bundle_id_and_part.py
+    deps:
+      - data/raw/questions.csv
+      - data/interim/train_tail.csv
+    outs:
+      - data/interim/train_with_bundle_id_part.csv
+
