@@ -43,3 +43,12 @@ stages:
     outs:
       - data/interim/train_prior_question_had_explanation_filled.csv
 
+  add_user_correctness:
+    cmd: python src/feature/add_user_correctness.py
+    deps:
+      - data/interim/train_prior_question_had_explanation_filled.csv
+    params:
+      - target
+    outs:
+      - data/interim/train_with_user_correctness.csv
+
