@@ -5,3 +5,5 @@ frac: 0.0125
 seed: 3
 
 target: 'answered_correctly'
+
+tail_length: 24

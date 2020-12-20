@@ -52,3 +52,21 @@ stages:
     outs:
       - data/interim/train_with_user_correctness.csv
 
+  user_content_agg:
+    cmd: python src/data/user_content_agg.py
+    deps:
+      - data/interim/train_with_user_correctness.csv
+    params:
+      - target
+    outs:
+      - data/processed/user_agg.csv
+      - data/processed/content_agg.csv
+
+  keep_tail:
+    cmd: python src/data/keep_tail.py
+    deps:
+      - data/interim/train_with_user_correctness.csv
+    params:
+      - tail_length
+    outs:
+      - data/interim/train_tail.csv
