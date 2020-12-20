@@ -1,26 +1,45 @@
 stages:
 
-  download_data:
-    cmd: python src/data/download_data.py
-    params:
-      - kaggle_competition
-    outs:
-      - data/raw/example_sample_submission.csv
-      - data/raw/example_test.csv
-      - data/raw/lectures.csv
-      - data/raw/questions.csv
-      - data/raw/train.csv
-      - data/raw/riiideducation/__init__.py
-      - data/raw/riiideducation/competition.cpython-37m-x86_64-linux-gnu.so
-
-  csv2feather:
-    cmd: python src/data/csv2feather.py
-    deps:
-      - data/raw/train.csv
-    outs:
-      - data/raw/train.feather
+#  download_data:
+#    cmd: python src/data/download_data.py
+#    params:
+#      - kaggle_competition
+#    outs:
+#      - data/raw/example_sample_submission.csv
+#      - data/raw/example_test.csv
+#      - data/raw/lectures.csv
+#      - data/raw/questions.csv
+#      - data/raw/train.csv
+#      - data/raw/riiideducation/__init__.py
+#      - data/raw/riiideducation/competition.cpython-37m-x86_64-linux-gnu.so
+#
+#  csv2feather:
+#    cmd: python src/data/csv2feather.py
+#    deps:
+#      - data/raw/train.csv
+#    outs:
+#      - data/raw/train.feather
 
   sample_data:
-    cmd: src/data/sample_data.py
+    cmd: python src/data/sample_data.py
     deps:
       - data/raw/train.feather
+    outs:
+      - data/interim/train_cropped.csv
+
+  drop_lectures:
+    cmd: python src/data/drop_lectures.py
+    deps:
+      - data/interim/train_cropped.csv
+    params:
+      - target
+    outs:
+      - data/interim/train_cropped_lectures_dropped.csv
+
+  fill_prior_question_had_explanation:
+    cmd: python src/feature/fill_prior_question_had_explanation.py
+    deps:
+      - data/interim/train_cropped_lectures_dropped.csv
+    outs:
+      - data/interim/train_prior_question_had_explanation_filled.csv
+
