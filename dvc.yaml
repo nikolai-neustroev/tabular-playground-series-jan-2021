@@ -96,3 +96,11 @@ stages:
       - data/processed/content_agg.csv
     outs:
       - data/interim/train_with_content_count.csv
+
+  add_prior_question_elapsed_time_true:
+    cmd: python src/feature/add_prior_question_elapsed_time_true.py
+    deps:
+      - data/interim/train_with_content_count.csv
+    outs:
+      - data/interim/train_with_prior_question_elapsed_time_true.csv
+
