@@ -79,3 +79,13 @@ stages:
     outs:
       - data/interim/train_with_bundle_id_part.csv
 
+  add_lectures_watched_in_part:
+    cmd: python src/feature/add_lectures_watched_in_part.py
+    deps:
+      - data/interim/train_cropped.csv
+      - data/raw/lectures.csv
+      - data/interim/train_with_bundle_id_part.csv
+    outs:
+      - data/processed/lectures_watched_in_part.csv
+      - data/interim/train_with_lecture_count.csv
+
