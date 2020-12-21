@@ -89,3 +89,10 @@ stages:
       - data/processed/lectures_watched_in_part.csv
       - data/interim/train_with_lecture_count.csv
 
+  add_content_count:
+    cmd: python src/feature/add_content_count.py
+    deps:
+      - data/interim/train_with_lecture_count.csv
+      - data/processed/content_agg.csv
+    outs:
+      - data/interim/train_with_content_count.csv
