@@ -104,3 +104,10 @@ stages:
     outs:
       - data/interim/train_with_prior_question_elapsed_time_true.csv
 
+  train_val_split:
+    cmd: python src/data/train_val_split.py
+    deps:
+      - data/interim/train_with_prior_question_elapsed_time_true.csv
+    outs:
+      - data/processed/train_df_mini.csv
+      - data/processed/valid_df_mini.csv
