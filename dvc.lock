@@ -21,5 +21,21 @@ lgbm_modelling:
     size: 87516226
   outs:
   - path: models/lgbm/model.txt
-    md5: 376af96380a73ba4421dfbefc4df6d08
+    md5: 25e54c2767c85c5323a3e54688c02b1c
     size: 3012504
+lgbm_inference:
+  cmd: python src/inference/lgbm_inf.py
+  deps:
+  - path: data/raw/test.csv
+    md5: 0715b534f7f3826ae8574cff3f9c43d5
+    size: 54761136
+  - path: models/lgbm/model.txt
+    md5: 25e54c2767c85c5323a3e54688c02b1c
+    size: 3012504
+  outs:
+  - path: data/submission/submission.csv
+    md5: cc3fab4f4d8c7046f077aeb4b3dffccd
+    size: 4945497
+submission:
+  cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
+    -m "LightGBM"

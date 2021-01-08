@@ -18,3 +18,17 @@ stages:
       - data/raw/train.csv
     outs:
       - models/lgbm/model.txt
+
+  lgbm_inference:
+    cmd: python src/inference/lgbm_inf.py
+    deps:
+      - models/lgbm/model.txt
+      - data/raw/test.csv
+    outs:
+      - data/submission/submission.csv
+
+  submission:
+    cmd: kaggle competitions submit
+      tabular-playground-series-jan-2021
+      -f data/submission/submission.csv
+      -m "LightGBM"
