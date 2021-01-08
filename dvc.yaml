@@ -1,113 +1,13 @@
 stages:
 
-#  download_data:
-#    cmd: python src/data/download_data.py
-#    params:
-#      - kaggle_competition
-#    outs:
-#      - data/raw/example_sample_submission.csv
-#      - data/raw/example_test.csv
-#      - data/raw/lectures.csv
-#      - data/raw/questions.csv
-#      - data/raw/train.csv
-#      - data/raw/riiideducation/__init__.py
-#      - data/raw/riiideducation/competition.cpython-37m-x86_64-linux-gnu.so
-#
-#  csv2feather:
-#    cmd: python src/data/csv2feather.py
-#    deps:
-#      - data/raw/train.csv
-#    outs:
-#      - data/raw/train.feather
-
-  sample_data:
-    cmd: python src/data/sample_data.py
-    deps:
-      - data/raw/train.feather
-    outs:
-      - data/interim/train_cropped.csv
-
-  drop_lectures:
-    cmd: python src/data/drop_lectures.py
-    deps:
-      - data/interim/train_cropped.csv
+  download_data:
+    cmd: python src/data/download_data.py
     params:
-      - target
+    - kaggle_competition
     outs:
-      - data/interim/train_cropped_lectures_dropped.csv
-
-  fill_prior_question_had_explanation:
-    cmd: python src/feature/fill_prior_question_had_explanation.py
-    deps:
-      - data/interim/train_cropped_lectures_dropped.csv
-    outs:
-      - data/interim/train_prior_question_had_explanation_filled.csv
-
-  add_user_correctness:
-    cmd: python src/feature/add_user_correctness.py
-    deps:
-      - data/interim/train_prior_question_had_explanation_filled.csv
-    params:
-      - target
-    outs:
-      - data/interim/train_with_user_correctness.csv
-
-  user_content_agg:
-    cmd: python src/data/user_content_agg.py
-    deps:
-      - data/interim/train_with_user_correctness.csv
-    params:
-      - target
-    outs:
-      - data/processed/user_agg.csv
-      - data/processed/content_agg.csv
-
-  keep_tail:
-    cmd: python src/data/keep_tail.py
-    deps:
-      - data/interim/train_with_user_correctness.csv
-    params:
-      - tail_length
-    outs:
-      - data/interim/train_tail.csv
-
-  add_bundle_id_and_part:
-    cmd: python src/feature/add_bundle_id_and_part.py
-    deps:
-      - data/raw/questions.csv
-      - data/interim/train_tail.csv
-    outs:
-      - data/interim/train_with_bundle_id_part.csv
-
-  add_lectures_watched_in_part:
-    cmd: python src/feature/add_lectures_watched_in_part.py
-    deps:
-      - data/interim/train_cropped.csv
-      - data/raw/lectures.csv
-      - data/interim/train_with_bundle_id_part.csv
-    outs:
-      - data/processed/lectures_watched_in_part.csv
-      - data/interim/train_with_lecture_count.csv
-
-  add_content_count:
-    cmd: python src/feature/add_content_count.py
-    deps:
-      - data/interim/train_with_lecture_count.csv
-      - data/processed/content_agg.csv
-    outs:
-      - data/interim/train_with_content_count.csv
-
-  add_prior_question_elapsed_time_true:
-    cmd: python src/feature/add_prior_question_elapsed_time_true.py
-    deps:
-      - data/interim/train_with_content_count.csv
-    outs:
-      - data/interim/train_with_prior_question_elapsed_time_true.csv
-
-  train_val_split:
-    cmd: python src/data/train_val_split.py
-    deps:
-      - data/interim/train_with_prior_question_elapsed_time_true.csv
-    outs:
-      - data/processed/train_df_mini.csv
-      - data/processed/valid_df_mini.csv
+    - data/raw/sample_submission.csv:
+        cache: false
+    - data/raw/test.csv:
+        cache: false
+    - data/raw/train.csv:
+        cache: false

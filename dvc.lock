@@ -1,0 +1,21 @@
+first_stage:
+  cmd: python src/data/tt.py
+  outs:
+  - path: fg.txt
+    md5: 3d4044d65abdda407a92991f1300ec97
+    size: 2
+download_data:
+  cmd: python src/data/download_data.py
+  params:
+    params.yaml:
+      kaggle_competition: tabular-playground-series-jan-2021
+  outs:
+  - path: data/raw/sample_submission.csv
+    md5: 5760d6874a1f01db080bd2108d4c6a17
+    size: 2155901
+  - path: data/raw/test.csv
+    md5: 0715b534f7f3826ae8574cff3f9c43d5
+    size: 54761136
+  - path: data/raw/train.csv
+    md5: 385c19080a9d087491d91d3eeaa95c87
+    size: 87516226

@@ -1,4 +1,4 @@
-kaggle_competition: 'riiid-test-answer-prediction'
+kaggle_competition: 'tabular-playground-series-jan-2021'
 
 # sample_data
 frac: 0.0125
