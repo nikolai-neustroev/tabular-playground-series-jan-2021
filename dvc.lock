@@ -13,3 +13,13 @@ download_data:
   - path: data/raw/train.csv
     md5: 385c19080a9d087491d91d3eeaa95c87
     size: 87516226
+lgbm_modelling:
+  cmd: python src/model/lgbm.py
+  deps:
+  - path: data/raw/train.csv
+    md5: 385c19080a9d087491d91d3eeaa95c87
+    size: 87516226
+  outs:
+  - path: models/lgbm/model.txt
+    md5: 376af96380a73ba4421dfbefc4df6d08
+    size: 3012504

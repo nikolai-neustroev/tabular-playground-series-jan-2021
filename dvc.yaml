@@ -11,3 +11,10 @@ stages:
         cache: false
     - data/raw/train.csv:
         cache: false
+
+  lgbm_modelling:
+    cmd: python src/model/lgbm.py
+    deps:
+      - data/raw/train.csv
+    outs:
+      - models/lgbm/model.txt
