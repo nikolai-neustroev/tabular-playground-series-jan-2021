@@ -12,20 +12,29 @@ stages:
     - data/raw/train.csv:
         cache: false
 
-  lgbm_modelling:
-    cmd: python src/model/lgbm.py
+  pca:
+    cmd: python src/data/pca.py
+    params:
+      - n_components
     deps:
       - data/raw/train.csv
     outs:
+      - data/interim/train_pca.csv
+
+  lgbm_modelling:
+    cmd: python src/model/lgbm.py
+    deps:
+      - data/interim/train_pca.csv
+    outs:
       - models/lgbm/model.txt
 
-  lgbm_inference:
-    cmd: python src/inference/lgbm_inf.py
-    deps:
-      - models/lgbm/model.txt
-      - data/raw/test.csv
-    outs:
-      - data/submission/submission.csv
+#  lgbm_inference:
+#    cmd: python src/inference/lgbm_inf.py
+#    deps:
+#      - models/lgbm/model.txt
+#      - data/raw/test.csv
+#    outs:
+#      - data/submission/submission.csv
 
 # You may submit a maximum of 5 entries per day.
 #  submission:

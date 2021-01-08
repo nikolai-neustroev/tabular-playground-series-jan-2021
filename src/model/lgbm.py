@@ -18,27 +18,10 @@ if __name__ == '__main__':
             api_token=neptune_init['api_token'],
         )
 
-        df = pd.read_csv("data/raw/train.csv")
+        df = pd.read_csv("data/interim/train_pca.csv")
         train_df, valid_df = train_test_split(df, test_size=0.4, random_state=42)
 
         target = 'target'
-
-        features = [
-            'cont1',
-            'cont2',
-            'cont3',
-            'cont4',
-            'cont5',
-            'cont6',
-            'cont7',
-            'cont8',
-            'cont9',
-            'cont10',
-            'cont11',
-            'cont12',
-            'cont13',
-            'cont14',
-        ]
 
         params = {
             'objective': 'regression',
@@ -49,15 +32,18 @@ if __name__ == '__main__':
             'num_leaves': 80
         }
 
-        tr_data = lgb.Dataset(train_df[features], label=train_df[target])
-        va_data = lgb.Dataset(valid_df[features], label=valid_df[target])
+        train_df_tmp = train_df.drop(['id', target], axis=1, inplace=False)
+        tr_data = lgb.Dataset(train_df_tmp, label=train_df[target])
+
+        valid_df_tmp = valid_df.drop(['id', target], axis=1, inplace=False)
+        va_data = lgb.Dataset(valid_df_tmp, label=valid_df[target])
 
         evals_result = {}  # Record training results
         experiment = neptune.create_experiment(
             name='lgb',
             tags=['train'],
             params=params,
-            properties={'target': target, 'features': ', '.join(features)}
+            properties={'target': target, 'features': ', '.join(list(train_df_tmp.columns.values))}
         )
         monitor = neptune_monitor()
 

@@ -16,13 +16,13 @@ download_data:
 lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
-  - path: data/raw/train.csv
-    md5: 385c19080a9d087491d91d3eeaa95c87
-    size: 87516226
+  - path: data/interim/train_pca.csv
+    md5: a4237a7719fd014fc1d7237c8ef6eb6e
+    size: 80875421
   outs:
   - path: models/lgbm/model.txt
-    md5: 25e54c2767c85c5323a3e54688c02b1c
-    size: 3012504
+    md5: 82286ec5946ac86b97d9f6bafa2d857a
+    size: 2411014
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
@@ -39,3 +39,16 @@ lgbm_inference:
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
+pca:
+  cmd: python src/data/pca.py
+  deps:
+  - path: data/raw/train.csv
+    md5: 385c19080a9d087491d91d3eeaa95c87
+    size: 87516226
+  params:
+    params.yaml:
+      n_components: 12
+  outs:
+  - path: data/interim/train_pca.csv
+    md5: a4237a7719fd014fc1d7237c8ef6eb6e
+    size: 80875421
