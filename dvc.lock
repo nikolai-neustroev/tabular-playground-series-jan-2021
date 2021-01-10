@@ -17,12 +17,12 @@ lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
   - path: data/interim/train_pca.csv
-    md5: 3b4b59a7b0d9799f673bbd7551571c17
-    size: 87005777
+    md5: 1b0b1ba3220faf96de8e7197d58b7625
+    size: 31486711
   outs:
   - path: models/lgbm/model.txt
-    md5: 1a845d51ca1c825a5c2ac4dcf989e9aa
-    size: 2484489
+    md5: b46cf7709c0a34232ea111de9f7bc107
+    size: 682876
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
@@ -47,11 +47,11 @@ pca:
     size: 88281121
   params:
     params.yaml:
-      n_components: 0.99
+      n_components: 0.7
   outs:
   - path: data/interim/train_pca.csv
-    md5: 3b4b59a7b0d9799f673bbd7551571c17
-    size: 87005777
+    md5: 1b0b1ba3220faf96de8e7197d58b7625
+    size: 31486711
 scale:
   cmd: python src/data/scale.py
   deps:
