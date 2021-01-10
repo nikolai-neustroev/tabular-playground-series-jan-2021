@@ -22,20 +22,10 @@ stages:
       - data/interim/train_scaled.csv:
           cache: false
 
-  pca:
-    cmd: python src/data/pca.py
-    params:
-      - n_components
-    deps:
-      - data/interim/train_scaled.csv
-    outs:
-      - data/interim/train_pca.csv:
-          cache: false
-
   lgbm_modelling:
     cmd: python src/model/lgbm.py
     deps:
-      - data/interim/train_pca.csv
+      - data/interim/train_scaled.csv
     outs:
       - models/lgbm/model.txt
 

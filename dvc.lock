@@ -16,13 +16,13 @@ download_data:
 lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
-  - path: data/interim/train_pca.csv
-    md5: 1b0b1ba3220faf96de8e7197d58b7625
-    size: 31486711
+  - path: data/interim/train_scaled.csv
+    md5: a5b5a1aa7b736699ce8d421ef57bdaf2
+    size: 88281121
   outs:
   - path: models/lgbm/model.txt
-    md5: b46cf7709c0a34232ea111de9f7bc107
-    size: 682876
+    md5: 92b5b324c2ce0a3ada61a3c06d1e7770
+    size: 2878904
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:

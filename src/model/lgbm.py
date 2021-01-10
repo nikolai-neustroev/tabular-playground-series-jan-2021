@@ -18,7 +18,7 @@ if __name__ == '__main__':
             api_token=neptune_init['api_token'],
         )
 
-        df = pd.read_csv("data/interim/train_pca.csv")
+        df = pd.read_csv("data/interim/train_scaled.csv")
         train_df, valid_df = train_test_split(df, test_size=0.4, random_state=42)
 
         target = 'target'
