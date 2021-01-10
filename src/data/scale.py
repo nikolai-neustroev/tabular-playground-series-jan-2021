@@ -25,7 +25,9 @@ if __name__ == '__main__':
         scaled = scaler.fit_transform(df[features])
         scaled = pd.DataFrame(data=scaled, columns=features)
 
-        df_not_features = df[df.columns.difference(features)]
+        unwanted = df.columns[df.columns.str.startswith('cont')]
+        df_not_features = df.drop(unwanted, axis=1)
+        # df_not_features = df[df.columns.difference(features)]
 
         df_scaled = pd.concat([df_not_features, scaled], axis=1)
         df_scaled.to_csv(f"data/interim/{p.stem}_scaled.csv", index=False)

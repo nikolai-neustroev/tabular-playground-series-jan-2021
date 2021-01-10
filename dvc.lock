@@ -17,25 +17,25 @@ lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
   - path: data/interim/train_scaled.csv
-    md5: 2d3f1819dc75776a982b8b133ced2fdf
-    size: 87616429
+    md5: a3c08be12aef3812f40c764e4ada57be
+    size: 82497218
   outs:
   - path: models/lgbm/model.txt
-    md5: 833e2ad8169186efffba476d8e0d7566
-    size: 2778731
+    md5: 4d0064d2bd06d7e462b1e44f6727e616
+    size: 2175137
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
   - path: data/interim/test_scaled.csv
-    md5: 92a9d4ec1f1fc0192cfd689e5fed2d48
-    size: 54851710
+    md5: e9a413a48dca584dacbe02b66a099429
+    size: 32161217
   - path: models/lgbm/model.txt
-    md5: 833e2ad8169186efffba476d8e0d7566
-    size: 2778731
+    md5: defd2873dd2b661f85750419a2fbd3cd
+    size: 1843290
   outs:
   - path: data/submission/submission.csv
-    md5: a8bea297c87044be70030dc26cb5b251
-    size: 4942443
+    md5: c98b75c0850505ec29ba3871798a4f43
+    size: 4947995
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -61,18 +61,23 @@ scale:
   params:
     params.yaml:
       features:
+      - cont1
       - cont2
       - cont3
       - cont4
+      - cont5
       - cont6
       - cont7
       - cont8
+      - cont9
+      - cont10
       - cont11
       - cont12
+      - cont13
   outs:
   - path: data/interim/train_scaled.csv
-    md5: 2d3f1819dc75776a982b8b133ced2fdf
-    size: 87616429
+    md5: a3c08be12aef3812f40c764e4ada57be
+    size: 82497218
 scale_test:
   cmd: python src/data/scale.py -f data/raw/test.csv
   deps:
@@ -82,15 +87,21 @@ scale_test:
   params:
     params.yaml:
       features:
+      - cont1
       - cont2
       - cont3
       - cont4
+      - cont5
       - cont6
       - cont7
       - cont8
+      - cont9
+      - cont10
       - cont11
       - cont12
+      - cont13
+      - cont14
   outs:
   - path: data/interim/test_scaled.csv
-    md5: 92a9d4ec1f1fc0192cfd689e5fed2d48
-    size: 54851710
+    md5: 257e35abd95ca08ce3b39079d397dfc3
+    size: 55291367
