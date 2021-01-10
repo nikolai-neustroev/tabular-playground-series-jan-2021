@@ -14,22 +14,27 @@ stages:
 
   lgbm_modelling:
     cmd: python src/model/lgbm.py
+    params:
+      - features_one
+      - features_two
     deps:
       - data/raw/train.csv
     outs:
-      - models/lgbm/model.txt
+      - models/lgbm/model_one.txt
+      - models/lgbm/model_two.txt
 
   lgbm_inference:
     cmd: python src/inference/lgbm_inf.py
     deps:
-      - models/lgbm/model.txt
+      - models/lgbm/model_one.txt
+      - models/lgbm/model_two.txt
       - data/raw/test.csv
     outs:
       - data/submission/submission.csv
 
 # You may submit a maximum of 5 entries per day.
-#  submission:
-#    cmd: kaggle competitions submit
-#      tabular-playground-series-jan-2021
-#      -f data/submission/submission.csv
-#      -m "LightGBM"
+  submission:
+    cmd: kaggle competitions submit
+      tabular-playground-series-jan-2021
+      -f data/submission/submission.csv
+      -m "LightGBM"

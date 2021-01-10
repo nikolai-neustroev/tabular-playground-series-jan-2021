@@ -8,9 +8,13 @@ from sklearn.model_selection import train_test_split
 import neptune
 from neptunecontrib.monitoring.lightgbm import neptune_monitor
 
+from src.utils.read_params import read_params
+
 if __name__ == '__main__':
     logger.add("logs/logs_lgbm.txt", level="TRACE", rotation="10 KB")
     with logger.catch():
+        parameters = read_params()
+
         with open("params/neptune.json") as json_file:
             neptune_init = json.load(json_file)
         neptune.init(
@@ -23,22 +27,7 @@ if __name__ == '__main__':
 
         target = 'target'
 
-        features = [
-            'cont1',
-            'cont2',
-            'cont3',
-            'cont4',
-            'cont5',
-            'cont6',
-            'cont7',
-            'cont8',
-            'cont9',
-            'cont10',
-            'cont11',
-            'cont12',
-            'cont13',
-            'cont14',
-        ]
+        features_one = parameters['features_one']
 
         params = {
             'objective': 'regression',
@@ -49,15 +38,15 @@ if __name__ == '__main__':
             'num_leaves': 80
         }
 
-        tr_data = lgb.Dataset(train_df[features], label=train_df[target])
-        va_data = lgb.Dataset(valid_df[features], label=valid_df[target])
+        tr_data = lgb.Dataset(train_df[features_one], label=train_df[target])
+        va_data = lgb.Dataset(valid_df[features_one], label=valid_df[target])
 
         evals_result = {}  # Record training results
         experiment = neptune.create_experiment(
             name='lgb',
             tags=['train'],
             params=params,
-            properties={'target': target, 'features': ', '.join(features)}
+            properties={'target': target, 'features': ', '.join(features_one)}
         )
         monitor = neptune_monitor()
 
@@ -72,7 +61,38 @@ if __name__ == '__main__':
             callbacks=[monitor],
         )
 
-        model.save_model('models/lgbm/model.txt')
+        model.save_model('models/lgbm/model_one.txt')
+        ax = lgb.plot_importance(model, importance_type='gain')
+        experiment.log_image('importance', plt.gcf())
+
+        neptune.stop()
+
+        features_two = parameters['features_two']
+
+        tr_data = lgb.Dataset(train_df[features_two], label=train_df[target])
+        va_data = lgb.Dataset(valid_df[features_two], label=valid_df[target])
+
+        evals_result = {}  # Record training results
+        experiment = neptune.create_experiment(
+            name='lgb',
+            tags=['train'],
+            params=params,
+            properties={'target': target, 'features': ', '.join(features_two)}
+        )
+        monitor = neptune_monitor()
+
+        model = lgb.train(
+            params,
+            tr_data,
+            num_boost_round=5000,
+            valid_sets=[tr_data, va_data],
+            evals_result=evals_result,
+            early_stopping_rounds=100,
+            verbose_eval=100,
+            callbacks=[monitor],
+        )
+
+        model.save_model('models/lgbm/model_two.txt')
         ax = lgb.plot_importance(model, importance_type='gain')
         experiment.log_image('importance', plt.gcf())
 

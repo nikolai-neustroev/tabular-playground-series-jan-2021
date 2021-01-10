@@ -1,1 +1,20 @@
 kaggle_competition: 'tabular-playground-series-jan-2021'
+
+features_one:
+  - 'cont1'
+  - 'cont6'
+  - 'cont7'
+  - 'cont8'
+  - 'cont9'
+  - 'cont10'
+  - 'cont11'
+  - 'cont12'
+  - 'cont13'
+
+features_two:
+  - 'cont2'
+  - 'cont3'
+  - 'cont4'
+  - 'cont5'
+  - 'cont14'
+
