@@ -5,7 +5,7 @@ from loguru import logger
 if __name__ == '__main__':
     logger.add("logs/logs_lgbm.txt", level="TRACE", rotation="10 KB")
     with logger.catch():
-        df = pd.read_csv("data/raw/test.csv")
+        df = pd.read_csv("data/interim/test_scaled.csv")
         model = lgb.Booster(model_file="models/lgbm/model.txt")
 
         features = [

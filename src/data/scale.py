@@ -1,3 +1,6 @@
+import argparse
+from pathlib import Path
+
 from loguru import logger
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
@@ -8,13 +11,21 @@ if __name__ == '__main__':
     logger.add("logs/logs_scale.txt", level="TRACE", rotation="10 KB")
     with logger.catch():
         params = read_params()
-        train = pd.read_csv("data/raw/train.csv")
+
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--file", "-f", help="CSV to scale")
+        args = parser.parse_args()
+        p = Path(args.file)
+
+        df = pd.read_csv(p)
 
         features = params['features']
 
         scaler = MinMaxScaler()
-        scaled = scaler.fit_transform(train[features])
+        scaled = scaler.fit_transform(df[features])
         scaled = pd.DataFrame(data=scaled, columns=features)
 
-        df_scaled = pd.concat([train[['id', 'target']], scaled], axis=1)
-        df_scaled.to_csv("data/interim/train_scaled.csv", index=False)
+        df_not_features = df[df.columns.difference(features)]
+
+        df_scaled = pd.concat([df_not_features, scaled], axis=1)
+        df_scaled.to_csv(f"data/interim/{p.stem}_scaled.csv", index=False)
