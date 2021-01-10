@@ -17,25 +17,25 @@ lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
   - path: data/interim/train_scaled.csv
-    md5: a5b5a1aa7b736699ce8d421ef57bdaf2
-    size: 88281121
+    md5: 2d3f1819dc75776a982b8b133ced2fdf
+    size: 87616429
   outs:
   - path: models/lgbm/model.txt
-    md5: 92b5b324c2ce0a3ada61a3c06d1e7770
-    size: 2878904
+    md5: 833e2ad8169186efffba476d8e0d7566
+    size: 2778731
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
   - path: data/interim/test_scaled.csv
-    md5: 257e35abd95ca08ce3b39079d397dfc3
-    size: 55291367
+    md5: 92a9d4ec1f1fc0192cfd689e5fed2d48
+    size: 54851710
   - path: models/lgbm/model.txt
-    md5: 92b5b324c2ce0a3ada61a3c06d1e7770
-    size: 2878904
+    md5: 833e2ad8169186efffba476d8e0d7566
+    size: 2778731
   outs:
   - path: data/submission/submission.csv
-    md5: 5987f7a85ef93aa3f40833b10b9425c1
-    size: 4946324
+    md5: a8bea297c87044be70030dc26cb5b251
+    size: 4942443
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -61,24 +61,18 @@ scale:
   params:
     params.yaml:
       features:
-      - cont1
       - cont2
       - cont3
       - cont4
-      - cont5
       - cont6
       - cont7
       - cont8
-      - cont9
-      - cont10
       - cont11
       - cont12
-      - cont13
-      - cont14
   outs:
   - path: data/interim/train_scaled.csv
-    md5: a5b5a1aa7b736699ce8d421ef57bdaf2
-    size: 88281121
+    md5: 2d3f1819dc75776a982b8b133ced2fdf
+    size: 87616429
 scale_test:
   cmd: python src/data/scale.py -f data/raw/test.csv
   deps:
@@ -88,21 +82,15 @@ scale_test:
   params:
     params.yaml:
       features:
-      - cont1
       - cont2
       - cont3
       - cont4
-      - cont5
       - cont6
       - cont7
       - cont8
-      - cont9
-      - cont10
       - cont11
       - cont12
-      - cont13
-      - cont14
   outs:
   - path: data/interim/test_scaled.csv
-    md5: 257e35abd95ca08ce3b39079d397dfc3
-    size: 55291367
+    md5: 92a9d4ec1f1fc0192cfd689e5fed2d48
+    size: 54851710
