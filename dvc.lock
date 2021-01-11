@@ -39,3 +39,23 @@ lgbm_inference:
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
+train_drop_outliers:
+  cmd: python src/data/drop_outliers.py -f data/raw/train.csv
+  deps:
+  - path: data/raw/train.csv
+    md5: 385c19080a9d087491d91d3eeaa95c87
+    size: 87516226
+  outs:
+  - path: data/interim/train_cleaned.csv
+    md5: 9285ded953aa7083783d9995183e003b
+    size: 86763774
+test_drop_outliers:
+  cmd: python src/data/drop_outliers.py -f data/raw/test.csv
+  deps:
+  - path: data/raw/test.csv
+    md5: 0715b534f7f3826ae8574cff3f9c43d5
+    size: 54761136
+  outs:
+  - path: data/interim/test_cleaned.csv
+    md5: c0bb831edb359cdb3dc3db80bc36a9cc
+    size: 52862208

@@ -12,18 +12,21 @@ stages:
     - data/raw/train.csv:
         cache: false
 
-  lgbm_modelling:
-    cmd: python src/model/lgbm.py
+  train_drop_outliers:
+    cmd: python src/data/drop_outliers.py -f data/raw/train.csv
     deps:
       - data/raw/train.csv
     outs:
-      - models/lgbm/model.txt
+      - data/interim/train_cleaned.csv:
+          cache: false
 
-  lgbm_inference:
-    cmd: python src/inference/lgbm_inf.py
+  gmr_fit_predict:
+    cmd: python src/model/gmregr.py
+    params:
+      - features
     deps:
-      - models/lgbm/model.txt
-      - data/raw/test.csv
+      - data/interim/train_cleaned.csv
+      - data/interim/test_cleaned.csv
     outs:
       - data/submission/submission.csv
 
