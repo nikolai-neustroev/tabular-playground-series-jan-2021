@@ -28,8 +28,8 @@ stages:
       - data/submission/submission.csv
 
 # You may submit a maximum of 5 entries per day.
-#  submission:
-#    cmd: kaggle competitions submit
-#      tabular-playground-series-jan-2021
-#      -f data/submission/submission.csv
-#      -m "LightGBM"
+  submission:
+    cmd: kaggle competitions submit
+      tabular-playground-series-jan-2021
+      -f data/submission/submission.csv
+      -m "LightGBM"

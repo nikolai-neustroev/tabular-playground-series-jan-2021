@@ -46,7 +46,8 @@ if __name__ == '__main__':
             'metric': 'rmse',
             'learning_rate': 0.05,
             'max_bin': 800,
-            'num_leaves': 80
+            'num_leaves': 80,
+            'min_child_samples': train_df.shape[0] // 50,
         }
 
         tr_data = lgb.Dataset(train_df[features], label=train_df[target])
