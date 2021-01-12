@@ -8,6 +8,8 @@ from sklearn.model_selection import train_test_split
 import neptune
 from neptunecontrib.monitoring.lightgbm import neptune_monitor
 
+from src.utils.read_params import read_params
+
 if __name__ == '__main__':
     logger.add("logs/logs_lgbm.txt", level="TRACE", rotation="10 KB")
     with logger.catch():
@@ -18,27 +20,14 @@ if __name__ == '__main__':
             api_token=neptune_init['api_token'],
         )
 
-        df = pd.read_csv("data/raw/train.csv")
+        param = read_params()
+
+        df = pd.read_csv("data/interim/train_logarithm.csv")
         train_df, valid_df = train_test_split(df, test_size=0.4, random_state=42)
 
         target = 'target'
 
-        features = [
-            'cont1',
-            'cont2',
-            'cont3',
-            'cont4',
-            'cont5',
-            'cont6',
-            'cont7',
-            'cont8',
-            'cont9',
-            'cont10',
-            'cont11',
-            'cont12',
-            'cont13',
-            'cont14',
-        ]
+        features = param['features']
 
         params = {
             'objective': 'regression',
@@ -46,7 +35,8 @@ if __name__ == '__main__':
             'metric': 'rmse',
             'learning_rate': 0.05,
             'max_bin': 800,
-            'num_leaves': 80
+            'num_leaves': 80,
+            'min_child_samples': train_df.shape[0] // 50,
         }
 
         tr_data = lgb.Dataset(train_df[features], label=train_df[target])
