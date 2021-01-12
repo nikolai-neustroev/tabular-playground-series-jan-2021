@@ -12,10 +12,18 @@ stages:
     - data/raw/train.csv:
         cache: false
 
+  drop_outliers:
+    cmd: python src/data/drop_outliers.py
+    deps:
+      - data/raw/train.csv
+    outs:
+      - data/interim/train_no_outliers.csv:
+          cache: false
+
   lgbm_modelling:
     cmd: python src/model/lgbm.py
     deps:
-      - data/raw/train.csv
+      - data/interim/train_no_outliers.csv
     outs:
       - models/lgbm/model.txt
 

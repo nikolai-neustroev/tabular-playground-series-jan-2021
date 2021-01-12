@@ -16,13 +16,13 @@ download_data:
 lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
-  - path: data/raw/train.csv
-    md5: 385c19080a9d087491d91d3eeaa95c87
-    size: 87516226
+  - path: data/interim/train_no_outliers.csv
+    md5: 1df3d6dd6f065d583835b7d6d2273980
+    size: 86138896
   outs:
   - path: models/lgbm/model.txt
-    md5: 3de4278bba1f02ab0ab98d8b4a2e9d19
-    size: 3513134
+    md5: 6641a75e5f10a49727773aed29b3bb5f
+    size: 3124165
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
@@ -30,12 +30,22 @@ lgbm_inference:
     md5: 0715b534f7f3826ae8574cff3f9c43d5
     size: 54761136
   - path: models/lgbm/model.txt
-    md5: 3de4278bba1f02ab0ab98d8b4a2e9d19
-    size: 3513134
+    md5: 6641a75e5f10a49727773aed29b3bb5f
+    size: 3124165
   outs:
   - path: data/submission/submission.csv
-    md5: 4f3804d3fbf2476bd930e229152a0c18
-    size: 4944784
+    md5: 1fcf347030ea20b835f7a290e7a66e96
+    size: 4944709
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
+drop_outliers:
+  cmd: python src/data/drop_outliers.py
+  deps:
+  - path: data/raw/train.csv
+    md5: 385c19080a9d087491d91d3eeaa95c87
+    size: 87516226
+  outs:
+  - path: data/interim/train_no_outliers.csv
+    md5: 1df3d6dd6f065d583835b7d6d2273980
+    size: 86138896
