@@ -20,8 +20,8 @@ if __name__ == '__main__':
         test = pd.read_csv("data/interim/test_logarithm.csv")
 
         # scaler = StandardScaler()
-        scaler = MinMaxScaler()
-        # scaler = MaxAbsScaler()
+        # scaler = MinMaxScaler()
+        scaler = MaxAbsScaler()
         # scaler = RobustScaler()
         # scaler = PowerTransformer()
         # scaler = QuantileTransformer(output_distribution='uniform')
