@@ -17,8 +17,8 @@ lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
   - path: data/interim/train_scaled.csv
-    md5: 58915c8cea6ac1d59127f51ca330391c
-    size: 106534503
+    md5: 18d2faadfe30a485b3fee219e1c56d13
+    size: 106616360
   params:
     params.yaml:
       features:
@@ -38,17 +38,17 @@ lgbm_modelling:
       - cont14
   outs:
   - path: models/lgbm/model.txt
-    md5: 138032a33bda5b684b45a49ecc627732
-    size: 3261650
+    md5: e84d8a9581ff3a00f385092af0ab453a
+    size: 3764870
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
   - path: data/interim/test_scaled.csv
-    md5: 1f0a336f19e872f80489f379d29e8bbb
-    size: 67450894
+    md5: b3dd562bb71456c092aeb3f9a8b5f102
+    size: 67505802
   - path: models/lgbm/model.txt
-    md5: 138032a33bda5b684b45a49ecc627732
-    size: 3261650
+    md5: e84d8a9581ff3a00f385092af0ab453a
+    size: 3764870
   params:
     params.yaml:
       features:
@@ -68,8 +68,8 @@ lgbm_inference:
       - cont14
   outs:
   - path: data/submission/submission.csv
-    md5: 4ba7e402533611e0f1d9bd02571c79f6
-    size: 4944326
+    md5: 63f7667303842d92af87e916e8a66f33
+    size: 4944149
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -133,8 +133,8 @@ scaling:
       - cont14
   outs:
   - path: data/interim/test_scaled.csv
-    md5: 1f0a336f19e872f80489f379d29e8bbb
-    size: 67450894
+    md5: b3dd562bb71456c092aeb3f9a8b5f102
+    size: 67505802
   - path: data/interim/train_scaled.csv
-    md5: 58915c8cea6ac1d59127f51ca330391c
-    size: 106534503
+    md5: 18d2faadfe30a485b3fee219e1c56d13
+    size: 106616360

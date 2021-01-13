@@ -1,11 +1,11 @@
 import pandas as pd
 from loguru import logger
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import MaxAbsScaler
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import Normalizer
-from sklearn.preprocessing import QuantileTransformer
+# from sklearn.preprocessing import MinMaxScaler
+# from sklearn.preprocessing import MaxAbsScaler
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.preprocessing import RobustScaler
+# from sklearn.preprocessing import Normalizer
+# from sklearn.preprocessing import QuantileTransformer
 from sklearn.preprocessing import PowerTransformer
 
 from src.utils.read_params import read_params
@@ -23,7 +23,7 @@ if __name__ == '__main__':
         # scaler = MinMaxScaler()
         # scaler = MaxAbsScaler()
         # scaler = RobustScaler()
-        scaler = PowerTransformer(standardize=False)
+        scaler = PowerTransformer()
         # scaler = QuantileTransformer(output_distribution='uniform')
         # scaler = QuantileTransformer(output_distribution='normal')
         # scaler = Normalizer()
