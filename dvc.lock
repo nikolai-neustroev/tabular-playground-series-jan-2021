@@ -16,9 +16,9 @@ download_data:
 lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
-  - path: data/interim/train_logarithm.csv
-    md5: 65f00cb4641f9e8579b9c05269d6bd64
-    size: 104920768
+  - path: data/interim/train_scaled.csv
+    md5: 18d2faadfe30a485b3fee219e1c56d13
+    size: 106616360
   params:
     params.yaml:
       features:
@@ -38,17 +38,17 @@ lgbm_modelling:
       - cont14
   outs:
   - path: models/lgbm/model.txt
-    md5: 5a0ef6fcefa234d47946c929f4f69ec4
-    size: 3260050
+    md5: e84d8a9581ff3a00f385092af0ab453a
+    size: 3764870
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
-  - path: data/interim/test_logarithm.csv
-    md5: b82962441d67c9bba2a9f59c57594e83
-    size: 66373834
+  - path: data/interim/test_scaled.csv
+    md5: b3dd562bb71456c092aeb3f9a8b5f102
+    size: 67505802
   - path: models/lgbm/model.txt
-    md5: 5a0ef6fcefa234d47946c929f4f69ec4
-    size: 3260050
+    md5: e84d8a9581ff3a00f385092af0ab453a
+    size: 3764870
   params:
     params.yaml:
       features:
@@ -68,8 +68,8 @@ lgbm_inference:
       - cont14
   outs:
   - path: data/submission/submission.csv
-    md5: 563cb787600507cb3ece8d6808a84e70
-    size: 4944326
+    md5: 63f7667303842d92af87e916e8a66f33
+    size: 4944149
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -105,3 +105,36 @@ logarithm_test:
   - path: data/interim/test_logarithm.csv
     md5: b82962441d67c9bba2a9f59c57594e83
     size: 66373834
+scaling:
+  cmd: python src/feature/scaling.py
+  deps:
+  - path: data/interim/test_logarithm.csv
+    md5: b82962441d67c9bba2a9f59c57594e83
+    size: 66373834
+  - path: data/interim/train_logarithm.csv
+    md5: 65f00cb4641f9e8579b9c05269d6bd64
+    size: 104920768
+  params:
+    params.yaml:
+      features:
+      - cont1
+      - cont2
+      - cont3
+      - cont4
+      - cont5
+      - cont6_logarithm
+      - cont7
+      - cont8_logarithm
+      - cont9
+      - cont10
+      - cont11
+      - cont12
+      - cont13_logarithm
+      - cont14
+  outs:
+  - path: data/interim/test_scaled.csv
+    md5: b3dd562bb71456c092aeb3f9a8b5f102
+    size: 67505802
+  - path: data/interim/train_scaled.csv
+    md5: 18d2faadfe30a485b3fee219e1c56d13
+    size: 106616360
