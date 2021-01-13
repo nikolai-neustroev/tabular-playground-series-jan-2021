@@ -23,10 +23,10 @@ if __name__ == '__main__':
         # scaler = MinMaxScaler()
         # scaler = MaxAbsScaler()
         # scaler = RobustScaler()
-        # scaler = PowerTransformer()
+        scaler = PowerTransformer(standardize=False)
         # scaler = QuantileTransformer(output_distribution='uniform')
         # scaler = QuantileTransformer(output_distribution='normal')
-        scaler = Normalizer()
+        # scaler = Normalizer()
 
         train[features] = scaler.fit_transform(train[features])
         test[features] = scaler.transform(test[features])
