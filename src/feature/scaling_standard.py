@@ -19,8 +19,8 @@ if __name__ == '__main__':
         train = pd.read_csv("data/interim/train_logarithm.csv")
         test = pd.read_csv("data/interim/test_logarithm.csv")
 
-        scaler = StandardScaler()
-        # scaler = MinMaxScaler()
+        # scaler = StandardScaler()
+        scaler = MinMaxScaler()
         # scaler = MaxAbsScaler()
         # scaler = RobustScaler()
         # scaler = PowerTransformer()
