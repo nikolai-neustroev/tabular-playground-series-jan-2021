@@ -45,12 +45,25 @@ stages:
       - data/interim/test_scaled.csv:
           cache: false
 
+  division:
+    cmd: python src/feature/division.py
+    params:
+      - features
+    deps:
+      - data/interim/train_scaled.csv
+      - data/interim/test_scaled.csv
+    outs:
+      - data/interim/train_div.csv:
+          cache: false
+      - data/interim/test_div.csv:
+          cache: false
+
   lgbm_modelling:
     cmd: python src/model/lgbm.py
     params:
       - features
     deps:
-      - data/interim/train_scaled.csv
+      - data/interim/train_div.csv
     outs:
       - models/lgbm/model.txt
 
@@ -60,7 +73,7 @@ stages:
       - features
     deps:
       - models/lgbm/model.txt
-      - data/interim/test_scaled.csv
+      - data/interim/test_div.csv
     outs:
       - data/submission/submission.csv
 

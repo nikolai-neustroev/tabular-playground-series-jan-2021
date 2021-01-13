@@ -9,7 +9,7 @@ if __name__ == '__main__':
     with logger.catch():
         param = read_params()
 
-        df = pd.read_csv("data/interim/test_scaled.csv")
+        df = pd.read_csv("data/interim/test_div.csv")
         model = lgb.Booster(model_file="models/lgbm/model.txt")
 
         features = param['features']
