@@ -23,8 +23,8 @@ if __name__ == '__main__':
         # scaler = MinMaxScaler()
         # scaler = MaxAbsScaler()
         # scaler = RobustScaler()
-        scaler = PowerTransformer()
-        # scaler = QuantileTransformer(output_distribution='uniform')
+        # scaler = PowerTransformer()
+        scaler = QuantileTransformer(output_distribution='uniform')
         # scaler = QuantileTransformer(output_distribution='normal')
         # scaler = Normalizer()
 
