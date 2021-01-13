@@ -21,8 +21,8 @@ if __name__ == '__main__':
 
         # scaler = StandardScaler()
         # scaler = MinMaxScaler()
-        scaler = MaxAbsScaler()
-        # scaler = RobustScaler()
+        # scaler = MaxAbsScaler()
+        scaler = RobustScaler()
         # scaler = PowerTransformer()
         # scaler = QuantileTransformer(output_distribution='uniform')
         # scaler = QuantileTransformer(output_distribution='normal')
