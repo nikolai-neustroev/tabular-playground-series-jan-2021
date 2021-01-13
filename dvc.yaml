@@ -22,15 +22,6 @@ stages:
       - data/interim/train_logarithm.csv:
           cache: false
 
-  lgbm_modelling:
-    cmd: python src/model/lgbm.py
-    params:
-      - features
-    deps:
-      - data/interim/train_logarithm.csv
-    outs:
-      - models/lgbm/model.txt
-
   logarithm_test:
     cmd: python src/feature/logarithm.py -f data/raw/test.csv
     params:
@@ -41,19 +32,41 @@ stages:
       - data/interim/test_logarithm.csv:
           cache: false
 
+  scaling:
+    cmd: python src/feature/scaling_standard.py
+    params:
+      - features
+    deps:
+      - data/interim/train_logarithm.csv
+      - data/interim/test_logarithm.csv
+    outs:
+      - data/interim/train_scaled.csv:
+          cache: false
+      - data/interim/test_scaled.csv:
+          cache: false
+
+  lgbm_modelling:
+    cmd: python src/model/lgbm.py
+    params:
+      - features
+    deps:
+      - data/interim/train_scaled.csv
+    outs:
+      - models/lgbm/model.txt
+
   lgbm_inference:
     cmd: python src/inference/lgbm_inf.py
     params:
       - features
     deps:
       - models/lgbm/model.txt
-      - data/interim/test_logarithm.csv
+      - data/interim/test_scaled.csv
     outs:
       - data/submission/submission.csv
 
 # You may submit a maximum of 5 entries per day.
-  submission:
-    cmd: kaggle competitions submit
-      tabular-playground-series-jan-2021
-      -f data/submission/submission.csv
-      -m "LightGBM"
+#  submission:
+#    cmd: kaggle competitions submit
+#      tabular-playground-series-jan-2021
+#      -f data/submission/submission.csv
+#      -m "LightGBM"
