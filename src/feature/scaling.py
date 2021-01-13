@@ -25,8 +25,8 @@ if __name__ == '__main__':
         # scaler = RobustScaler()
         # scaler = PowerTransformer()
         # scaler = QuantileTransformer(output_distribution='uniform')
-        scaler = QuantileTransformer(output_distribution='normal')
-        # scaler = Normalizer()
+        # scaler = QuantileTransformer(output_distribution='normal')
+        scaler = Normalizer()
 
         train[features] = scaler.fit_transform(train[features])
         test[features] = scaler.transform(test[features])
