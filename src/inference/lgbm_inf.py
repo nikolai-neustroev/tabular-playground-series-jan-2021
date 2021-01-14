@@ -9,10 +9,13 @@ if __name__ == '__main__':
     with logger.catch():
         param = read_params()
 
-        df = pd.read_csv("data/interim/test_div.csv")
+        df = pd.read_csv("data/interim/test_selected.csv")
         model = lgb.Booster(model_file="models/lgbm/model.txt")
 
-        features = param['features']
+        # features = param['features']
+        features = df.columns
+        features = list(features)
+        features.remove('id')
 
         df['target'] = model.predict(df[features])
         df[['id', 'target']].to_csv("data/submission/submission.csv", index=False)
