@@ -63,7 +63,7 @@ if __name__ == '__main__':
         )
 
         model.save_model('models/lgbm/model.txt')
-        ax = lgb.plot_importance(model, importance_type='gain')
+        ax = lgb.plot_importance(model, importance_type='gain', figsize=(10, 40))
         experiment.log_image('importance', plt.gcf())
 
         neptune.stop()
