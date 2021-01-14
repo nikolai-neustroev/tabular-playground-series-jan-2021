@@ -38,10 +38,23 @@ lgbm_modelling:
       - cont6_logarithm
       - cont9
       - cont8_logarithm
+      - cont13_logarithm_div_cont4
+      - cont4_div_cont12
+      - cont11_div_cont13_logarithm
+      - cont13_logarithm_div_cont10
+      - cont2_div_cont1
+      - cont1_div_cont6_logarithm
+      - cont2_div_cont13_logarithm
+      - cont13_logarithm_div_cont11
+      - cont13_logarithm_div_cont6_logarithm
+      - cont10_div_cont13_logarithm
+      - cont1_div_cont12
+      - cont14_div_cont13_logarithm
+      - cont4_div_cont13_logarithm
   outs:
   - path: models/lgbm/model.txt
-    md5: c373aadcfe4f334b7bf27d2a82c6d8ae
-    size: 3663264
+    md5: 062a3f39a74415c738aaff15f2cde185
+    size: 2528439
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
@@ -49,8 +62,8 @@ lgbm_inference:
     md5: 19725354fd55bb780fffe9264e1911fb
     size: 770551654
   - path: models/lgbm/model.txt
-    md5: c373aadcfe4f334b7bf27d2a82c6d8ae
-    size: 3663264
+    md5: 062a3f39a74415c738aaff15f2cde185
+    size: 2528439
   params:
     params.yaml:
       features:
@@ -70,10 +83,23 @@ lgbm_inference:
       - cont6_logarithm
       - cont9
       - cont8_logarithm
+      - cont13_logarithm_div_cont4
+      - cont4_div_cont12
+      - cont11_div_cont13_logarithm
+      - cont13_logarithm_div_cont10
+      - cont2_div_cont1
+      - cont1_div_cont6_logarithm
+      - cont2_div_cont13_logarithm
+      - cont13_logarithm_div_cont11
+      - cont13_logarithm_div_cont6_logarithm
+      - cont10_div_cont13_logarithm
+      - cont1_div_cont12
+      - cont14_div_cont13_logarithm
+      - cont4_div_cont13_logarithm
   outs:
   - path: data/submission/submission.csv
-    md5: 559e56da99c446c72177837c2b356206
-    size: 4944807
+    md5: 6cec7f5f3e0c1f044d958db20d89683a
+    size: 4944338
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -137,6 +163,19 @@ scaling:
       - cont6_logarithm
       - cont9
       - cont8_logarithm
+      - cont13_logarithm_div_cont4
+      - cont4_div_cont12
+      - cont11_div_cont13_logarithm
+      - cont13_logarithm_div_cont10
+      - cont2_div_cont1
+      - cont1_div_cont6_logarithm
+      - cont2_div_cont13_logarithm
+      - cont13_logarithm_div_cont11
+      - cont13_logarithm_div_cont6_logarithm
+      - cont10_div_cont13_logarithm
+      - cont1_div_cont12
+      - cont14_div_cont13_logarithm
+      - cont4_div_cont13_logarithm
   outs:
   - path: data/interim/test_scaled.csv
     md5: b3dd562bb71456c092aeb3f9a8b5f102
@@ -172,6 +211,19 @@ division:
       - cont6_logarithm
       - cont9
       - cont8_logarithm
+      - cont13_logarithm_div_cont4
+      - cont4_div_cont12
+      - cont11_div_cont13_logarithm
+      - cont13_logarithm_div_cont10
+      - cont2_div_cont1
+      - cont1_div_cont6_logarithm
+      - cont2_div_cont13_logarithm
+      - cont13_logarithm_div_cont11
+      - cont13_logarithm_div_cont6_logarithm
+      - cont10_div_cont13_logarithm
+      - cont1_div_cont12
+      - cont14_div_cont13_logarithm
+      - cont4_div_cont13_logarithm
   outs:
   - path: data/interim/test_div.csv
     md5: 19725354fd55bb780fffe9264e1911fb

@@ -35,7 +35,7 @@ stages:
   scaling:
     cmd: python src/feature/scaling.py
     params:
-      - features
+      - features_to_div
     deps:
       - data/interim/train_logarithm.csv
       - data/interim/test_logarithm.csv
