@@ -23,3 +23,15 @@ features:
 #  - 'cont13'
   - 'cont13_logarithm'
   - 'cont14'
+
+max_depth: 2
+
+transform_primitives:
+  - 'add_numeric'
+  - 'subtract_numeric'
+  - 'multiply_numeric'
+  - 'divide_numeric'
+  - 'divide_by_feature'
+  - 'negate'
+  - 'modulo_numeric'
+  - 'modulo_by_feature'
