@@ -16,11 +16,13 @@ download_data:
 lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
-  - path: data/interim/train_scaled.csv
-    md5: 18d2faadfe30a485b3fee219e1c56d13
-    size: 106616360
+  - path: data/interim/train_add_features.csv
+    md5: 4bccdf2b8ed38b46568bacf376b14888
+    size: 111350109
   params:
     params.yaml:
+      additional_features:
+      - cont13_logarithm_*_cont4
       features:
       - cont1
       - cont2
@@ -38,17 +40,17 @@ lgbm_modelling:
       - cont14
   outs:
   - path: models/lgbm/model.txt
-    md5: e84d8a9581ff3a00f385092af0ab453a
-    size: 3764870
+    md5: 595b12552f8ee795ae333711ddf47476
+    size: 3396754
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
-  - path: data/interim/test_scaled.csv
-    md5: b3dd562bb71456c092aeb3f9a8b5f102
-    size: 67505802
+  - path: data/interim/test_add_features.csv
+    md5: 08507bc9be68409bd1829e38b289560b
+    size: 70660576
   - path: models/lgbm/model.txt
-    md5: e84d8a9581ff3a00f385092af0ab453a
-    size: 3764870
+    md5: 595b12552f8ee795ae333711ddf47476
+    size: 3396754
   params:
     params.yaml:
       features:
@@ -68,8 +70,8 @@ lgbm_inference:
       - cont14
   outs:
   - path: data/submission/submission.csv
-    md5: 63f7667303842d92af87e916e8a66f33
-    size: 4944149
+    md5: 7ea89ab8b995bae84106b2eefcd442eb
+    size: 4944734
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -138,3 +140,23 @@ scaling:
   - path: data/interim/train_scaled.csv
     md5: 18d2faadfe30a485b3fee219e1c56d13
     size: 106616360
+add_features:
+  cmd: python src/feature/add_features.py
+  deps:
+  - path: data/interim/test_scaled.csv
+    md5: b3dd562bb71456c092aeb3f9a8b5f102
+    size: 67505802
+  - path: data/interim/train_scaled.csv
+    md5: 18d2faadfe30a485b3fee219e1c56d13
+    size: 106616360
+  params:
+    params.yaml:
+      additional_features:
+      - cont13_logarithm_*_cont4
+  outs:
+  - path: data/interim/test_add_features.csv
+    md5: 08507bc9be68409bd1829e38b289560b
+    size: 70660576
+  - path: data/interim/train_add_features.csv
+    md5: 4bccdf2b8ed38b46568bacf376b14888
+    size: 111350109

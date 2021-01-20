@@ -23,3 +23,6 @@ features:
 #  - 'cont13'
   - 'cont13_logarithm'
   - 'cont14'
+
+additional_features:
+  - 'cont13_logarithm_*_cont4'

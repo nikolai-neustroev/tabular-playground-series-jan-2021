@@ -22,12 +22,12 @@ if __name__ == '__main__':
 
         param = read_params()
 
-        df = pd.read_csv("data/interim/train_scaled.csv")
+        df = pd.read_csv("data/interim/train_add_features.csv")
         train_df, valid_df = train_test_split(df, test_size=0.4, random_state=42)
 
         target = 'target'
 
-        features = param['features']
+        features = param['features'] + param['additional_features']
 
         params = {
             'objective': 'regression',
