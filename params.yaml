@@ -1,25 +1,31 @@
 kaggle_competition: 'tabular-playground-series-jan-2021'
 
-features_to_logarithm:
-  - "cont6"
-  - "cont8"
-  - "cont13"
-
 features:
   - 'cont1'
   - 'cont2'
   - 'cont3'
   - 'cont4'
   - 'cont5'
-#  - 'cont6'
-  - 'cont6_logarithm'
+  - 'cont6'
   - 'cont7'
-#  - 'cont8'
-  - 'cont8_logarithm'
+  - 'cont8'
   - 'cont9'
   - 'cont10'
   - 'cont11'
   - 'cont12'
-#  - 'cont13'
-  - 'cont13_logarithm'
+  - 'cont13'
   - 'cont14'
+
+max_depth: 2
+
+transform_primitives:
+  - 'add_numeric'
+  - 'subtract_numeric'
+  - 'multiply_numeric'
+  - 'divide_numeric'
+  - 'divide_by_feature'
+  - 'negate'
+  - 'modulo_numeric'
+  - 'modulo_by_feature'
+
+n_components: 20

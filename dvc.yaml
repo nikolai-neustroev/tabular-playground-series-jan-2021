@@ -12,61 +12,54 @@ stages:
     - data/raw/train.csv:
         cache: false
 
-  logarithm_train:
-    cmd: python src/feature/logarithm.py -f data/raw/train.csv
-    params:
-      - features_to_logarithm
-    deps:
-      - data/raw/train.csv
-    outs:
-      - data/interim/train_logarithm.csv:
-          cache: false
-
-  logarithm_test:
-    cmd: python src/feature/logarithm.py -f data/raw/test.csv
-    params:
-      - features_to_logarithm
-    deps:
-      - data/raw/test.csv
-    outs:
-      - data/interim/test_logarithm.csv:
-          cache: false
-
-  scaling:
-    cmd: python src/feature/scaling.py
+  dfs:
+    cmd: python src/feature/dfs.py
     params:
       - features
+      - max_depth
+      - transform_primitives
     deps:
-      - data/interim/train_logarithm.csv
-      - data/interim/test_logarithm.csv
+      - data/raw/train.csv
+      - data/raw/test.csv
     outs:
-      - data/interim/train_scaled.csv:
+      - data/interim/train_augmented.csv:
           cache: false
-      - data/interim/test_scaled.csv:
+      - data/interim/test_augmented.csv:
+          cache: false
+
+  pca:
+    cmd: python src/feature/pca.py
+    params:
+      - n_components
+    deps:
+      - data/interim/train_augmented.csv
+    outs:
+      - data/interim/train_pca.csv:
           cache: false
 
   lgbm_modelling:
     cmd: python src/model/lgbm.py
     params:
       - features
+      - n_components
     deps:
-      - data/interim/train_scaled.csv
+      - data/interim/train_pca.csv
     outs:
       - models/lgbm/model.txt
 
-  lgbm_inference:
-    cmd: python src/inference/lgbm_inf.py
-    params:
-      - features
-    deps:
-      - models/lgbm/model.txt
-      - data/interim/test_scaled.csv
-    outs:
-      - data/submission/submission.csv
+#  lgbm_inference:
+#    cmd: python src/inference/lgbm_inf.py
+#    params:
+#      - features
+#    deps:
+#      - models/lgbm/model.txt
+#      - data/interim/test_scaled.csv
+#    outs:
+#      - data/submission/submission.csv
 
 # You may submit a maximum of 5 entries per day.
-  submission:
-    cmd: kaggle competitions submit
-      tabular-playground-series-jan-2021
-      -f data/submission/submission.csv
-      -m "LightGBM"
+#  submission:
+#    cmd: kaggle competitions submit
+#      tabular-playground-series-jan-2021
+#      -f data/submission/submission.csv
+#      -m "LightGBM"

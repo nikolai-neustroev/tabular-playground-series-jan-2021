@@ -16,9 +16,9 @@ download_data:
 lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
-  - path: data/interim/train_scaled.csv
-    md5: 18d2faadfe30a485b3fee219e1c56d13
-    size: 106616360
+  - path: data/interim/train_pca.csv
+    md5: f00047f360f055e084364280e25a921b
+    size: 124196191
   params:
     params.yaml:
       features:
@@ -27,19 +27,20 @@ lgbm_modelling:
       - cont3
       - cont4
       - cont5
-      - cont6_logarithm
+      - cont6
       - cont7
-      - cont8_logarithm
+      - cont8
       - cont9
       - cont10
       - cont11
       - cont12
-      - cont13_logarithm
+      - cont13
       - cont14
+      n_components: 20
   outs:
   - path: models/lgbm/model.txt
-    md5: e84d8a9581ff3a00f385092af0ab453a
-    size: 3764870
+    md5: 0bd7274200cc8f2dee6bd14307c78c17
+    size: 2467709
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
@@ -138,3 +139,59 @@ scaling:
   - path: data/interim/train_scaled.csv
     md5: 18d2faadfe30a485b3fee219e1c56d13
     size: 106616360
+dfs:
+  cmd: python src/feature/dfs.py
+  deps:
+  - path: data/raw/test.csv
+    md5: 0715b534f7f3826ae8574cff3f9c43d5
+    size: 54761136
+  - path: data/raw/train.csv
+    md5: 385c19080a9d087491d91d3eeaa95c87
+    size: 87516226
+  params:
+    params.yaml:
+      features:
+      - cont1
+      - cont2
+      - cont3
+      - cont4
+      - cont5
+      - cont6
+      - cont7
+      - cont8
+      - cont9
+      - cont10
+      - cont11
+      - cont12
+      - cont13
+      - cont14
+      max_depth: 2
+      transform_primitives:
+      - add_numeric
+      - subtract_numeric
+      - multiply_numeric
+      - divide_numeric
+      - divide_by_feature
+      - negate
+      - modulo_numeric
+      - modulo_by_feature
+  outs:
+  - path: data/interim/test_augmented.csv
+    md5: bb671352c196303dc7efde016cf27d8b
+    size: 2063943013
+  - path: data/interim/train_augmented.csv
+    md5: 8aeb6765ff2d4da076417ac4d6a3dea8
+    size: 3101239557
+pca:
+  cmd: python src/feature/pca.py
+  deps:
+  - path: data/interim/train_augmented.csv
+    md5: 8aeb6765ff2d4da076417ac4d6a3dea8
+    size: 3101239557
+  params:
+    params.yaml:
+      n_components: 20
+  outs:
+  - path: data/interim/train_pca.csv
+    md5: f00047f360f055e084364280e25a921b
+    size: 124196191

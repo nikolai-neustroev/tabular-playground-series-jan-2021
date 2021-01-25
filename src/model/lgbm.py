@@ -22,12 +22,14 @@ if __name__ == '__main__':
 
         param = read_params()
 
-        df = pd.read_csv("data/interim/train_scaled.csv")
+        df = pd.read_csv("data/interim/train_pca.csv")
         train_df, valid_df = train_test_split(df, test_size=0.4, random_state=42)
 
         target = 'target'
 
-        features = param['features']
+        features = []
+        for i in range(0, param['n_components']):
+            features.append('pca_' + str(i))
 
         params = {
             'objective': 'regression',
