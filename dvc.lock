@@ -17,12 +17,15 @@ lgbm_modelling:
   cmd: python src/model/lgbm.py
   deps:
   - path: data/interim/train_add_features.csv
-    md5: 4bccdf2b8ed38b46568bacf376b14888
-    size: 111350109
+    md5: 36a4f9b79679822571b32f40dbcdf3ff
+    size: 128612060
   params:
     params.yaml:
       additional_features:
       - cont13_logarithm_*_cont4
+      - cont1_-_cont12
+      - cont12_/_cont13_logarithm
+      - cont12_+_cont3
       features:
       - cont1
       - cont2
@@ -40,17 +43,17 @@ lgbm_modelling:
       - cont14
   outs:
   - path: models/lgbm/model.txt
-    md5: 595b12552f8ee795ae333711ddf47476
-    size: 3396754
+    md5: c663b92026a2dde2a818fb5619e7fd80
+    size: 3390203
 lgbm_inference:
   cmd: python src/inference/lgbm_inf.py
   deps:
   - path: data/interim/test_add_features.csv
-    md5: 08507bc9be68409bd1829e38b289560b
-    size: 70660576
+    md5: 63243ac62e7f1c2c8572e415ffac39af
+    size: 82168033
   - path: models/lgbm/model.txt
-    md5: 595b12552f8ee795ae333711ddf47476
-    size: 3396754
+    md5: c663b92026a2dde2a818fb5619e7fd80
+    size: 3390203
   params:
     params.yaml:
       features:
@@ -70,8 +73,8 @@ lgbm_inference:
       - cont14
   outs:
   - path: data/submission/submission.csv
-    md5: 7ea89ab8b995bae84106b2eefcd442eb
-    size: 4944734
+    md5: 7d5b59a96818b61a7288fcf759f0e812
+    size: 4944284
 submission:
   cmd: kaggle competitions submit tabular-playground-series-jan-2021 -f data/submission/submission.csv
     -m "LightGBM"
@@ -135,28 +138,31 @@ scaling:
       - cont14
   outs:
   - path: data/interim/test_scaled.csv
-    md5: b3dd562bb71456c092aeb3f9a8b5f102
-    size: 67505802
+    md5: 1f0a336f19e872f80489f379d29e8bbb
+    size: 67450894
   - path: data/interim/train_scaled.csv
-    md5: 18d2faadfe30a485b3fee219e1c56d13
-    size: 106616360
+    md5: 58915c8cea6ac1d59127f51ca330391c
+    size: 106534503
 add_features:
   cmd: python src/feature/add_features.py
   deps:
   - path: data/interim/test_scaled.csv
-    md5: b3dd562bb71456c092aeb3f9a8b5f102
-    size: 67505802
+    md5: 1f0a336f19e872f80489f379d29e8bbb
+    size: 67450894
   - path: data/interim/train_scaled.csv
-    md5: 18d2faadfe30a485b3fee219e1c56d13
-    size: 106616360
+    md5: 58915c8cea6ac1d59127f51ca330391c
+    size: 106534503
   params:
     params.yaml:
       additional_features:
       - cont13_logarithm_*_cont4
+      - cont1_-_cont12
+      - cont12_/_cont13_logarithm
+      - cont12_+_cont3
   outs:
   - path: data/interim/test_add_features.csv
-    md5: 08507bc9be68409bd1829e38b289560b
-    size: 70660576
+    md5: 63243ac62e7f1c2c8572e415ffac39af
+    size: 82168033
   - path: data/interim/train_add_features.csv
-    md5: 4bccdf2b8ed38b46568bacf376b14888
-    size: 111350109
+    md5: 36a4f9b79679822571b32f40dbcdf3ff
+    size: 128612060

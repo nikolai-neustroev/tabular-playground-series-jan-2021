@@ -26,3 +26,6 @@ features:
 
 additional_features:
   - 'cont13_logarithm_*_cont4'
+  - 'cont1_-_cont12'
+  - 'cont12_/_cont13_logarithm'
+  - 'cont12_+_cont3'
